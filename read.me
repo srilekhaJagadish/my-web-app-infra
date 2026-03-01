@@ -1,0 +1,16 @@
+# AWS Infrastructure with Terraform
+
+This project provisions a basic AWS infrastructure using Terraform, including VPC, subnets, security groups, an RDS PostgreSQL database, EFS, an Application Load Balancer, and an Auto Scaling Group with EC2 instances.
+
+## Features
+
+- **VPC** with public subnets in two Availability Zones
+- **Security Groups** for ALB, EC2, RDS, and EFS
+- **Amazon RDS** PostgreSQL instance
+- **Amazon EFS** for shared file storage
+- **Application Load Balancer** (ALB)
+- **Auto Scaling Group** with EC2 instances
+- **User data** for EC2 to mount EFS
+
+## Infrastructure is deployed in the `us-east-1` region.
+## Using Jenkinsfile
