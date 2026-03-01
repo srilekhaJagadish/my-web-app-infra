@@ -28,13 +28,28 @@ pipeline {
 
         stage('Approval') {
             steps {
-                input message: "Does the plan look correct for the Fomax Landing Surge requirements?", ok: "Deploy!"
+                script {
+                    def action = input(
+                        message: "Select action for Fomax Landing Surge infrastructure:",
+                        ok: "Proceed",
+                        parameters: [
+                            choice(name: 'ACTION', choices: ['Deploy', 'Destroy'], description: 'Choose Deploy or Destroy')
+                        ]
+                    )
+                    env.ACTION = action
+                }
             }
         }
 
-        stage('Terraform Apply') {
+        stage('Terraform Apply or Destroy') {
             steps {
-                sh 'terraform apply -input=false tfplan'
+                script {
+                    if (env.ACTION == 'Deploy') {
+                        sh 'terraform apply -input=false tfplan'
+                    } else if (env.ACTION == 'Destroy') {
+                        sh 'terraform destroy -auto-approve'
+                    }
+                }
             }
         }
     }
